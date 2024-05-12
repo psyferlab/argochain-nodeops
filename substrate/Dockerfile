@@ -1,13 +1,10 @@
 FROM ubuntu as builder
 
-LABEL maintainer="eliott@nuclei.studio"
-
 ARG PROFILE=release
 ARG GIT_REPO=https://github.com/devolved-ai/argochain.git
 ARG GIT_BRANCH=frontier-integration
 ARG BINARY_NAME=argochain
-ARG PACKAGE_NAME=all
-ARG FLAGS=
+ARG FLAGS="--dev"
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     clang \
@@ -22,13 +19,11 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y && \
     export PATH=$PATH:$HOME/.cargo/bin && \
     git clone ${GIT_REPO} source && \
     cd source && \
-    git checkout ${GIT_BRANCH} && \
-    git submodule update --init --recursive && \
     rustup default stable && \
     rustup toolchain install nightly && \	
     rustup target add wasm32-unknown-unknown --toolchain nightly && \
-    cargo build -p ${PACKAGE_NAME} --${PROFILE} ${FLAGS} && \
-    cp target/${PROFILE}/${BINARY_NAME} /argochain
+    cargo build --${PROFILE} ${FLAGS} && \
+    cp target/${PROFILE}/${BINARY_NAME} /argochain_node
 
 # ===== SECOND STAGE ======
 
@@ -43,4 +38,4 @@ RUN useradd --create-home runner
 USER runner
 EXPOSE 30333 9933 9944
 
-ENTRYPOINT ["argochain"]
+ENTRYPOINT ["argochain_node"]
