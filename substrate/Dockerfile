@@ -2,7 +2,6 @@ FROM ubuntu as builder
 
 ARG PROFILE=release
 ARG GIT_REPO=https://github.com/devolved-ai/argochain.git
-ARG GIT_BRANCH=frontier-integration
 ARG BINARY_NAME=argochain
 ARG FLAGS="--dev"
 
