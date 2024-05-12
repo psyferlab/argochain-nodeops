@@ -153,4 +153,3 @@ while true; do
     show_menu
     run_selected_action
 done
-```
