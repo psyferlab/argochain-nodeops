@@ -103,50 +103,50 @@ function create_service() {
     esac
     read -p "Enter Service Port: " port
     kubectl_command "kubectl expose deployment $name --type=$type --port=$port"
-}
+},
 
 function delete_service
 () {
     read -p "Enter Service Name to Delete: " name
     kubectl_command "kubectl delete service $name"
-}
+},
 
 function scale_deployment() {
     read -p "Enter Deployment Name to Scale: " name
     read -p "Enter New Number of Replicas: " replicas
     kubectl_command "kubectl scale deployment $name --replicas=$replicas"
-}
+},
 
 function update_deployment_image() {
     read -p "Enter Deployment Name: " name
     read -p "Enter New Image (e.g., nginx:latest): " image
     kubectl_command "kubectl set image deployment/$name *=${image}"
-}
+},
 
 function view_pod_logs() {
     read -p "Enter Pod Name: " pod_name
     kubectl_command "kubectl logs $pod_name"
-}
+},
 
 function restart_deployment() {
     read -p "Enter Deployment Name to Restart: " name
     kubectl_command "kubectl rollout restart deployment/$name"
-}
+},
 
 function set_resource_limits() {
     read -p "Enter Deployment Name: " name
     read -p "Enter CPU limit (e.g., 500m for 0.5 cores): " cpu
     read -p "Enter Memory limit (e.g., 1Gi): " memory
     kubectl_command "kubectl set resources deployment $name --limits=cpu=$cpu,memory=$memory"
-}
+},
 
 function setup_basic_monitoring() {
     kubectl_command "kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml"
-}
+},
 
 function configure_alerts() {
     kubectl_command "kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/master/bundle.yaml"
-}
+},
 
 # Main loop to show the menu and get user actions
 while true; do
