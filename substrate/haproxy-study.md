@@ -1,5 +1,6 @@
-Got it! For a Substrate node, you'll need to handle TCP load balancing on port 30333 and HTTP load balancing for the RPC ports 9944 (WebSocket) and 9933 (HTTP).
-
+I wanted to create an extensively covered HAProxy setup that would only be\
+rivaled by proprietary tools such as Amazon's ELB.\
+\
 Here's an updated `haproxy.cfg` configuration that includes these requirements:
 
 ### HAProxy Configuration
